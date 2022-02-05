@@ -20,7 +20,7 @@ document.addEventListener('keydown', (e) => {
 
     let kbKey = e.code;
     let noteDetail = getNoteDetail(kbKey);
-
+    console.log(noteDetail);
     if (noteDetail === undefined) return;
 
     noteDetail.active = true;
@@ -37,6 +37,7 @@ document.addEventListener('keyup', (e) => {
     playNotes();
 });
 
+//returns one note from NOTE_DETAILS
 function getNoteDetail(kbKey) {
     return NOTE_DETAILS.find((n) => `Key${n.key}` === kbKey);
 }
@@ -51,18 +52,21 @@ function playNotes() {
         }
     });
     let activeNotes = NOTE_DETAILS.filter((n) => n.active);
+    // added gain so volume doesnt overlap each other (exceeds 100% vol)
     let gain = 1 / activeNotes.length;
     activeNotes.forEach((n) => {
         startNote(n, gain);
     });
 }
 
+// plays the sound itself
 function startNote(noteDetail, gain) {
     let gainNode = AUDIO_CONTEXT.createGain();
     gainNode.gain.value = gain;
     let oscillator = AUDIO_CONTEXT.createOscillator();
     oscillator.frequency.value = noteDetail.frequency;
     oscillator.type = 'sine';
+    //passes the note through the gain(to controll the volume) into speakers
     oscillator.connect(gainNode).connect(AUDIO_CONTEXT.destination);
     oscillator.start();
     noteDetail.oscillator = oscillator;

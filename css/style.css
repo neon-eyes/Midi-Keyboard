@@ -2,6 +2,8 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -24,6 +26,7 @@ body {
 
 .white {
     --width: 100px;
+    color: black;
     background-color: white;
     border: 1px solid #333;
 }
@@ -34,6 +37,7 @@ body {
 
 .black {
     --width: 60px;
+    color: white;
     background-color: black;
     margin-left: calc(var(--width) / -2);
     margin-right: calc(var(--width) / -2);
